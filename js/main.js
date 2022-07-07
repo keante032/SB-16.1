@@ -4,15 +4,17 @@
 
 const $body = $("body");
 
-const $storiesLoadingMsg = $("#stories-loading-msg"); // div, html line 51
-const $allStoriesList = $("#all-stories-list"); // ol, html line 54
+const $storiesLoadingMsg = $("#stories-loading-msg");
+const $allStoriesList = $("#all-stories-list");
 
-const $loginForm = $("#login-form"); // form, html line 62
-const $signupForm = $("#signup-form"); // form, html line 77
+const $loginForm = $("#login-form");
+const $signupForm = $("#signup-form");
+const $storyAddForm = $("#add-story-form");
 
-const $navLogin = $("#nav-login"); // a, html line 41
-const $navUserProfile = $("#nav-user-profile"); // a, html line 42
-const $navLogOut = $("#nav-logout"); // a, html line 43
+const $navLogin = $("#nav-login");
+const $navAddStory = $("#nav-add-story");
+const $navUserProfile = $("#nav-user-profile");
+const $navLogOut = $("#nav-logout");
 
 /** To make it easier for individual components to show just themselves, this
  * is a useful function that hides pretty much everything on the page. After
@@ -20,7 +22,12 @@ const $navLogOut = $("#nav-logout"); // a, html line 43
  */
 
 function hidePageComponents() {
-    const components = [$allStoriesList, $loginForm, $signupForm];
+    const components = [
+        $allStoriesList,
+        $loginForm,
+        $signupForm,
+        $storyAddForm,
+    ];
     components.forEach((c) => c.hide());
 }
 

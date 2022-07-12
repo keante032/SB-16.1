@@ -39,7 +39,7 @@ function generateStoryMarkup(story) {
 		favStar = "&starf;";
 		favStarClass = "favStar-filled";
 	}
-	const hostName = story.getHostName();
+	const hostName = story.getHostName(story.url);
 	return $(`
       <li id="${story.storyId}">
         <a class="favStar ${favStarClass}">${favStar}</a>
@@ -49,13 +49,14 @@ function generateStoryMarkup(story) {
         <small class="story-hostname">(${hostName})</small>
         <small class="story-author">by ${story.author}</small>
         <small class="story-user">posted by ${story.username}</small>
+        <button class="remove-story">remove</button>
       </li>
     `);
 }
 
 function generateFavMarkup(fav) {
 	// console.debug("generateFavMarkup", fav);
-	const hostName = fav.getHostName();
+	const hostName = fav.getHostName(fav.url);
 	return $(`
       <li id="fav-${fav.storyId}">
         <a href="${fav.url}" target="a_blank" class="story-link">
@@ -141,4 +142,16 @@ async function clickFavStar(evt) {
 	await getAndPrepareFavs();
 }
 
-$("body").on("click", ".favStar", clickFavStar);
+$body.on("click", ".favStar", clickFavStar);
+
+/** If the remove button is clicked, delete the parent li from DOM and send delete request to API. */
+
+async function clickRemoveStory(evt) {
+	const parentLi = evt.target.parentElement;
+
+	const response = await StoryList.deleteStory(currentUser, parentLi.id);
+
+	parentLi.remove();
+}
+
+$body.on("click", ".remove-story", clickRemoveStory);

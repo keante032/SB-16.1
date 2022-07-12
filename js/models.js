@@ -22,9 +22,10 @@ class Story {
 
 	/** Parses hostname out of URL and returns it. */
 
-	getHostName() {
-		// UNIMPLEMENTED: complete this function!
-		return "hostname.com";
+	getHostName(url) {
+		// use built-in URL class to separate out the hostname
+		const theURL = new URL(url);
+		return theURL.hostname;
 	}
 }
 
@@ -119,6 +120,15 @@ class StoryList {
 			}
 		});
 		return new Story(response.data.story);
+	}
+
+	static async deleteStory(user, storyId) {
+		// send DELETE request to API with token and storyId to delete
+		const response = await axios({
+			url: `${BASE_URL}/stories/${storyId}`,
+			method: "DELETE",
+			data: { token: user.loginToken }
+		});
 	}
 }
 
